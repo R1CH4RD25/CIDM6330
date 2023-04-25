@@ -32,16 +32,6 @@ def get_allocated_batch_ref(session, orderid, sku):
 
     orderlineid = orderline.orderid
 
-    # batchref = session.scalars(
-    #     text(
-    #         "SELECT b.reference FROM allocations JOIN batches AS b ON batch_id = b.id"
-    #         " WHERE orderline_id=:orderlineid"
-    #     ),
-    #     dict(orderlineid=orderlineid),
-    # )
-
-    # SQLAlchmey 2.x join_from
-    # https://docs.sqlalchemy.org/en/20/orm/queryguide/select.html#setting-the-leftmost-from-clause-in-a-join
     stmt = (
         select(model.Batch.reference)
         .join_from(allocations, batches)
